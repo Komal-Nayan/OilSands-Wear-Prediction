@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!--
+Author : Komal Nayan Galla
+Programming: HTML, CSS, Javascript, jQuery
+Project: Wear Prediction Model
+Lead: Matthew Barton
+Manager: Christopher Murphy
+
+A Web Based Application that predicts the Best to Worst Case Lifetimes of a Part (IMP/VOL/FPLI/TB)
+Linear Regression is used to calculate the Impacts and Hours. While VaneLengths are like a uniform distribution of 25 values.
+
+Takes Metric Values by default. Can switch to Imperial.
+The dimensions vary depending on the Part IPN selected.
+The Process Parameters vary depending on the Combination of Application and Mine Site.
+
+Wear Coefficient is a numeric factor that takes Impact Force, Particle Size & Geometry, Particle Material, Corossion, 
+Erosion,etc. into consideration
+
+The default values for dimensions and Duty Conditions a.k.a. Process Parameters are in JSON format in script section.
+Couldn't access them or scripts when stored in separate file due to Organizational Policies. 
+
+Calculated Fields like suction velocity , Average Tonnage and Solids Weight Percentage are displayed when 'Analyse' button is clicked
+and the necessary fields are validated.
+
+Default Wear Coefficients are provided depending on the Combination of Application and Mine Site.
+But can always 'seek coefficient' with pairs of Hours and Vanelengths in the order of their inspections.
+Average Wear Coefficient is counter-calculated and displayed in the textbox.
+
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impeller Wear Prediction</title>
+    <link rel="stylesheet" href="./css/wpm.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body onload="loadMetric()">
+    <div class="container">
+        <div class="hamburger" onclick="toggleMenu()"><b id="menuTitle">MENU  </b><i class="fa fa-bars" style="font-size:24px;"></i></div>
+		<div class="hamburger-menu" id="hamburgerMenu">
+		  <a href="./index.html">IMPELLER</a>
+		  <a href="./tb.html">THROATBUSH</a>
+		  <a href="./vol.html">VOLUTE</a>
+		  <a href="./fpli.html">FPLI</a>
+		</div>
+        
+        <h1 style="color:#005EB8;">Impeller Wear Prediction</h1>
+        <div class="button-container">
+            <button class="button" id="buttonImperial">Imperial</button>
+            <button class="button" id="buttonMetric">Metric</button>
+        </div>
+        <div class="content">
+            <div class="form-container">
+			<select name="impIPNDropdown" id="impIPNDropdown" placeholder="Impeller IPN">
+				<option value="" disabled selected hidden>-- Impeller IPN --</option>
+				<!--Dynamic JSON based IPNs-->
+			</select>
+			<select name="applicationDropdown" id="applicationDropdown" placeholder="Application" onchange="updateFormFields()">
+				<option value="" disabled selected hidden>-- Application --</option>
+				<option value="Hydrotransport">Hydrotransport</option>
+				<option value="Tailings">Tailings</option>
+			</select>
+			<select name="siteDropdown" id="siteDropdown" placeholder="Mine Site" onchange="updateFormFields()">
+				<option value="" disabled selected hidden>-- Mine Site --</option>
+				<option value="Horizon">Horizon</option>
+				<option value="JPM">JPM</option>
+				<option value="MRM">MRM</option>
+				<option value="K1">K1</option>
+				<option value="K2">K2</option>
+				<option value="Mildred Lake">Mildred Lake</option>
+				<option value="Aurora">Aurora</option>
+				<option value="Base Plant" value="Fort Hills">Base Plant</option>
+				<option value="Fort Hills">Fort Hills</option>
+			</select>
+                <table>
+					<tr>
+						<td style="color:purple;font-size:12px;text-align:center;" id="cDCLabel">Custom Duty Conditions</td>
+						<td class="checkbox-wrapper-3" style="text-align: left; margin-left:0;"><input type="checkbox" id="cbx-3" /><label for="cbx-3" class="toggle"><span></span></label></td>
+					</tr>
+					<!--PROCESS-->
+                    <tr>
+                        <td><label for="avgRPM">Average RPM</label></td>
+                        <td><input type="text" id="avgRPM" class="process-parameter" placeholder="extracted or custom" disabled></td>
+						<td id="rpmUnits" class="units">rpm</td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgHead">Average Head</label></td>
+                        <td><input type="text" id="avgHead" class="process-parameter" placeholder="extracted or custom" disabled></td>
+                        <td id="headUnits" class="units">m</td>
+                    </tr>
+                    <tr>
+                        <td><label for="SG">S.G</label></td>
+                        <td><input type="text" id="SG" class="process-parameter" placeholder="extracted or custom" disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgFlow">Average Flow</label></td>
+                        <td><input type="text" id="avgFlow" class="process-parameter" placeholder="extracted or custom" disabled></td>
+						<td id="flowUnits" class="units">m<sup>3</sup>/hr</td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgTonnage">Average Tonnage</label></td>
+                        <td><input type="text" class="disabled" id="avgTonnage" placeholder="to be calculated" disabled></td>
+						<td id="tonnageUnits" class="units">tph</td>
+                    </tr>
+                    <tr>
+                        <td><label for="solidsWeightPercent">Solids Weight %</label></td>
+                        <td><input type="text" class="disabled" id="solidsWeightPercent" placeholder="to be calculated" disabled></td>
+                    </tr>
+					<tr>
+                        <td><label for="suctionVelocity">Suction Velocity</label></td>
+                        <td><input type="text" class="disabled" id="suctionVelocity" placeholder="to be calculated" disabled></td>
+						<td id="suctionVelocityUnits" class="units">m/s</td>
+                    </tr>
+					<tr>
+					<td><br></td>
+					</tr>
+					<!--USER INPUTS-->
+					<tr>
+                        <td><label for="startHours" class="mandatory">Start Hours</label></td>
+                        <td><input type="text" id="startHours" placeholder="Input Start Hours" required></td>
+						<td class="units">hrs</td>
+                    </tr>
+                    <tr>
+                        <td><label for="startVaneLength" class="mandatory">Start Vane Length</label></td>
+                        <td><input type="text" id="startVaneLength" placeholder="Input Start VL" required></td>
+						<td class="measure"></td>
+                    </tr>
+					<tr>
+					<td><br></td>
+					</tr>
+					<!--DIMENSIONS-->
+                    <tr>
+                        <td><label for="nominalVaneLength">Nominal Vane Length</label></td>
+                        <td><input type="text" class="disabled" id="nominalVaneLength" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+					<tr>
+                        <td><label for="eyeDiameter">Eye Diameter</label></td>
+                        <td><input type="text" class="disabled" id="eyeDiameter" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="failureVaneLength" class="mandatory">Vane Length at Failure</label></td>
+                        <td><input type="text" class="disabled" id="failureVaneLength" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="impellerID">Impeller ID</label></td>
+                        <td><input type="text" class="disabled" id="impellerID" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="impellerOD">Impeller OD</label></td>
+                        <td><input type="text" class="disabled" id="impellerOD" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="exponent">Exponent</label></td>
+                        <td><center><input type="range" id="exponent" name="exponent" min="2" max="3" step="0.01" oninput="updateValue(this.value)"><br>
+                            <span id="exponentValue">2.50</span></center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="wearCoefficient">Wear Coefficient</label></td>
+                        <td><input type="text" class="disabled" id="wearCoefficient" placeholder="extracted or calculated" disabled></td>
+						<td><button class="seek" onclick="goalseekDisplay()" id="seekBtn">Seek</button></td>
+                    </tr>
+                    <tr>
+                        <td><label for="totalLifeSpan">Total Life Span</label></td>
+                        <td><input type="text" class="disabled" id="totalLifeSpan" placeholder="to be calculated" disabled><br>
+						<td id="lifeSpanUnits" class="units">hrs</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><br><center><button class="analyse" onclick="analyse()">Analyse</button></center></td>
+						
+                </table>
+                <p id="x"></p>
+            </div>
+
+            <div class="graph-container">
+                <canvas id="lineGraph"></canvas>
+            </div>
+        </div>
+		<div class="table-container">
+			<p id="goalseekTitle" style="font-weight:bold; color:#00478A; font-size: 15px;"></p>
+			<table>
+				<tbody id="goalseekTable">
+				</tbody>
+			</table>
+		</div>
+        <div class="table-container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Impact</th>
+                        <th>Vane Length</th>
+                        <th>Hours</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                      <!-- Adding rows dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+	<script src="./script/wpm.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

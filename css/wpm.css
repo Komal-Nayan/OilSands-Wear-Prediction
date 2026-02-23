@@ -1,0 +1,400 @@
+/*CSS Styles for Wear Prediction Model
+Author: Komal Nayan Galla
+*/
+
+body {
+   color: black;
+   font-family: Arial, sans-serif; 
+}
+
+#lineGraph {
+  display: block;
+  width: 100% !important;
+  height: 100%;
+}
+
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+th {
+   background-color: #005EB8;
+   color: white; 
+}
+
+input[type="text"].process-parameter {
+   background-color: #F6B6BF;
+}
+
+:root {
+   --arrow-bg: rgba(255, 255, 255, 0.3);
+   --arrow-icon: url(https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg);
+   --option-bg: white;
+   --select-bg: rgba(255, 255, 255, 0.2);
+}
+
+select {
+   background-color: #5F5C59;
+   border-radius: 8px;
+   color: white;
+   padding: 10px;
+   width: 200px;
+   border: none;
+   font-size: 15px;
+   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+   -webkit-appearance: button;
+   appearance: button;
+   outline: none;
+   margin-bottom: 12px;
+}
+
+select::-ms-expand {
+   display: none;
+}
+
+select:focus {
+   outline: none;
+}
+
+.container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin: 20px;
+}
+.form-group {
+   margin-bottom: 10px;
+}
+.mandatory::after {
+   content: "*";
+   color: #ff0000; /* Neon red */
+}
+.content {
+   display: flex;
+   justify-content: space-between;
+   width: 100%;
+}
+.form-container{
+	width: 60%;
+}
+
+.form-container2{
+	width: 100%;
+}
+
+.graph-container {
+   width: 40%;
+   max-width: 100%;
+   height: auto;
+}
+.table-container {
+   margin-top: 20px;
+   width: 100%;
+}
+
+input[type="text"].disabled {
+   color: #BA3647;
+   background-color: #F6B6BF;
+}
+
+input[type="text"] {
+   color: black; 
+}
+
+td,th {
+   width: 150px;
+}
+
+label {
+   color: black;
+}
+
+.measure {
+   color: black;
+}
+.button-container {
+   display: flex;
+   gap: 10px;
+   margin-bottom: 20px;
+}
+.button {
+   background-color: white;
+   color: #337EC6;
+   border: 2px solid #337EC6;
+   width: 100px;
+   padding: 10px 20px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
+.button:hover {
+   background-color: #669ED4;
+   color: white;
+}
+.button.selected {
+   background-color: #337EC6;
+   color: white;
+   border: 2px solid #CCDFF1;
+   text-transform: uppercase;
+}
+
+.analyse {
+   background-color: #007D88; 
+   color: white;
+   border: 2px solid #CCEDF0; 
+   padding: 10px 20px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   border-radius: 14px;
+}
+.analyse:hover {
+   background-color: #00A7B5;
+   color: white; 
+}
+.analyse.selected {
+   background-color: #007D88; 
+   color: white; 
+}
+
+.seek {
+   background-color: #F6BE00 ; 
+   color: black;
+   border: 1.5px solid white; 
+   padding: 2px 5px;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   border-radius: 3px;
+}
+.seek:hover {
+   background-color: black;
+   color: #F6BE00; 
+}
+.seek.selected {
+   background-color: #00ffff; 
+   color: #0d0d0d; 
+}
+
+.checkbox-wrapper-3 input[type="checkbox"] {
+   visibility: hidden;
+   display: none;
+}
+
+.checkbox-wrapper-3 .toggle {
+   position: relative;
+   display: block;
+   width: 40px;
+   height: 20px;
+   cursor: pointer;
+   -webkit-tap-highlight-color: transparent;
+   transform: translate3d(0, 0, 0);
+}
+.checkbox-wrapper-3 .toggle:before {
+   content: "";
+   position: relative;
+   top: 3px;
+   left: 3px;
+   width: 34px;
+   height: 14px;
+   display: block;
+   background: #9a9999;
+   border-radius: 8px;
+   transition: background 0.2s ease;
+}
+.checkbox-wrapper-3 .toggle span {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 20px;
+   height: 20px;
+   display: block;
+   background: white;
+   border-radius: 10px;
+   box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+   transition: all 0.2s ease;
+}
+.checkbox-wrapper-3 .toggle span:before {
+   content: "";
+   position: absolute;
+   display: block;
+   margin: -18px;
+   width: 56px;
+   height: 56px;
+   background: rgba(79, 46, 220, 0.5);
+   border-radius: 50%;
+   transform: scale(0);
+   opacity: 1;
+   pointer-events: none;
+}
+
+.checkbox-wrapper-3 #cbx-3:checked + .toggle:before {
+   background: #947ada;
+}
+.checkbox-wrapper-3 #cbx-3:checked + .toggle span {
+   background: #4f2edc;
+   transform: translateX(20px);
+   transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+   box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+.checkbox-wrapper-3 #cbx-3:checked + .toggle span:before {
+   transform: scale(1);
+   opacity: 0;
+   transition: all 0.4s ease;
+}
+
+.hamburger {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.hamburger-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #002E5D;
+  border-radius: 4px;
+  padding: 2px;
+  z-index: 999;
+}
+
+.hamburger-menu.show {
+  display: block;
+}
+
+.hamburger-menu a {
+  display: block;
+  color: white;
+  padding: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.hamburger-menu a:hover {
+  background-color: #007D88;
+  color: #CCEDF0;
+  border-radius: 4px;
+}
+
+
+/*Media Queries for responsiveness*/
+
+/* Tablets (portrait and landscape) */
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px;
+    padding: 15px;
+  }
+
+  .form-container {
+    width: 90%;
+  }
+
+  table {
+    font-size: 14px;
+  }
+}
+
+/* Smartphones (landscape) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .graph-container {
+    width: 100%;
+  }
+
+  table {
+    font-size: 13px;
+	width: 100%;
+  }
+
+  td, th {
+    padding: 6px;
+    width: auto;
+  }
+
+  select {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Smartphones (portrait) */
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .form-container {
+    width: 100%;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  h1{
+	  font-size: 20px;
+  }
+  input[type="text"]
+  {
+	  width: 130%;
+	  box-sizing: border-box;
+  }
+  
+  #menuTitle{
+	  display: none;
+  }
+
+  .graph-container {
+    width: 100%;
+	height: 250px;
+  }
+
+  #lineGraph {
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  label{
+	  text-align: left;
+	  margin-left:0px;
+  }
+
+  table {
+    font-size: 13px;
+	width: 100%;
+  }
+
+  td, th {
+	padding: 6px;
+    width: auto;
+	font-size : 12px;
+  }
+
+  select {
+    width: 100%;
+    text-align: center;
+  }
+}

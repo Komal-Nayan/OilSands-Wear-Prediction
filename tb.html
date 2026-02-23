@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throatbush Wear Prediction</title>
+    <link rel="stylesheet" href="css/wpm.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body onload="loadMetric()">
+    <div class="container">
+        <div class="hamburger" onclick="toggleMenu()"><b id="menuTitle">MENU  </b><i class="fa fa-bars" style="font-size:24px;"></i></div>
+		<div class="hamburger-menu" id="hamburgerMenu">
+		  <a href="./index.html">IMPELLER</a>
+		  <a href="./tb.html">THROATBUSH</a>
+		  <a href="./vol.html">VOLUTE</a>
+		  <a href="./fpli.html">FPLI</a>
+		</div>
+        
+        <h1 style="color:#005EB8;">Throatbush Wear Prediction</h1> <!-- Sea Shell-->
+        <div class="button-container">
+            <button class="button" id="buttonImperial">Imperial</button>
+            <button class="button" id="buttonMetric">Metric</button>
+        </div>
+		<div class="content">
+            <div class="form-container2">
+			<select name="tbIPNDropdown" id="tbIPNDropdown" placeholder="Throatbush IPN">
+				<option value="" disabled selected hidden>-- Throatbush IPN --</option>
+				<!--Dynamic JSON based IPNs-->
+			</select>
+			<select name="impIPNDropdown" id="impIPNDropdown" placeholder="Impeller IPN">
+				<option value="" disabled selected hidden>-- Impeller IPN --</option>
+				<!--Dynamic JSON based IPNs-->
+			</select>
+			<select name="applicationDropdown" id="applicationDropdown" placeholder="Application" onchange="updateFormFields()">
+				<option value="" disabled selected hidden>-- Application --</option>
+				<option value="Hydrotransport">Hydrotransport</option>
+				<option value="Tailings">Tailings</option>
+			</select>
+			<select name="siteDropdown" id="siteDropdown" placeholder="Mine Site" onchange="updateFormFields()">
+				<option value="" disabled selected hidden>-- Mine Site --</option>
+				<option value="Horizon">Horizon</option>
+				<option value="JPM">JPM</option>
+				<option value="MRM">MRM</option>
+				<option value="K1">K1</option>
+				<option value="K2">K2</option>
+				<option value="Mildred Lake">Mildred Lake</option>
+				<option value="Aurora">Aurora</option>
+				<option value="Base Plant" value="Fort Hills">Base Plant</option>
+				<option value="Fort Hills">Fort Hills</option>
+			</select>
+                <table>
+					<tr>
+						<td style="color:purple;font-size:12px;text-align:center;">Custom Duty Conditions</td>
+						<td class="checkbox-wrapper-3" style="text-align: center;"><input type="checkbox" id="cbx-3" /><label for="cbx-3" class="toggle"><span></span></label></td>
+					</tr>
+					<!--PROCESS-->
+                    <tr>
+                        <td><label for="avgRPM">Average RPM</label></td>
+                        <td><input type="text" id="avgRPM" class="process-parameter" placeholder="extracted or custom" disabled></td>
+						<td id="rpmUnits" class="units">rpm</td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgHead">Average Head</label></td>
+                        <td><input type="text" id="avgHead" class="process-parameter" placeholder="extracted or custom" disabled></td>
+                        <td id="headUnits" class="units">m</td>
+                    </tr>
+                    <tr>
+                        <td><label for="SG">S.G</label></td>
+                        <td><input type="text" id="SG" class="process-parameter" placeholder="extracted or custom" disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgFlow">Average Flow</label></td>
+                        <td><input type="text" id="avgFlow" class="process-parameter" placeholder="extracted or custom" disabled></td>
+						<td id="flowUnits" class="units">m<sup>3</sup>/hr</td>
+                    </tr>
+                    <tr>
+                        <td><label for="avgD50">Average D50</label></td>
+                        <td><input type="text" id="avgD50" class="process-parameter" placeholder="extracted or custom" disabled></td>
+						<td id="d50Units" class="units">μm</td>
+                    </tr>					
+                    <tr>
+                        <td><label for="avgTonnage">Average Tonnage</label></td>
+                        <td><input type="text" class="disabled" id="avgTonnage" placeholder="to be calculated" disabled></td>
+						<td id="tonnageUnits" class="units">tph</td>
+                    </tr>
+                    <tr>
+                        <td><label for="solidsWeightPercent">Solids Weight %</label></td>
+                        <td><input type="text" class="disabled" id="solidsWeightPercent" placeholder="to be calculated" disabled></td><td>%</td>
+                    </tr>
+					<tr>
+                        <td><label for="eyeTipSpeed">Eye Tip Speed</label></td>
+                        <td><input type="text" class="disabled" id="eyeTipSpeed" placeholder="to be calculated" disabled></td>
+						<td id="eyeTipSpeedUnits" class="units">m/s</td>
+                    </tr>
+					<tr>
+                        <td><label for="impTipSpeed">Impeller Tip Speed</label></td>
+                        <td><input type="text" class="disabled" id="impTipSpeed" placeholder="to be calculated" disabled></td>
+						<td id="impTipSpeedUnits" class="units">m/s</td>
+                    </tr>					
+					<tr>
+					<td><br></td>
+					</tr>
+					<!--USER INPUTS-->
+
+					<!--DIMENSIONS-->
+                    <tr>
+                        <td><label for="throatbushID">TB ID Thickness</label></td>
+                        <td><input type="text" class="disabled" id="throatbushID" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+					<tr>
+                        <td><label for="throatbushOD">TB OD Thickness</label></td>
+                        <td><input type="text" class="disabled" id="throatbushOD" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+					<tr>
+                        <td><label for="eyeDiameter">Eye Diameter</label></td>
+                        <td><input type="text" class="disabled" id="eyeDiameter" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+					<tr>
+					<td><br></td>
+					</tr>
+                    <tr>
+                        <td><label for="impellerOD">Impeller OD</label></td>
+                        <td><input type="text" class="disabled" id="impellerOD" placeholder="to be extracted" disabled></td>
+						<td class="measure"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="exponent">Exponent 1</label></td>
+                        <td><center><input type="range" id="exponent1" name="exponent1" min="0.5" max="1.5" step="0.01" oninput="updateValue1(this.value)"><br>
+                            <span id="exponent1Value">1.00</span></center>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="exponent">Exponent 2</label></td>
+                        <td><center><input type="range" id="exponent2" name="exponent2" min="2" max="3" step="0.01" oninput="updateValue2(this.value)"><br>
+                            <span id="exponent2Value">2.50</span></center>
+                        </td>
+                    </tr>					
+                    <tr>
+                        <td><label for="idWear">ID Wear</label></td>
+                        <td><input type="text" class="disabled" id="idWear" placeholder="to be calculated" disabled><br>
+						<td id="idWearUnits" class="units">hrs</td>
+                    </tr>
+                    <tr>
+                        <td><label for="odWear">OD Wear</label></td>
+                        <td><input type="text" class="disabled" id="odWear" placeholder="to be calculated" disabled><br>
+						<td id="odWearUnits" class="units">hrs</td>
+                    </tr>					
+                    <tr>
+                        <td colspan="3"><br><center><button class="analyse" onclick="analyse()">Analyse</button></center></td>
+						
+                </table>
+                <p id="x"></p>
+            </div>
+	</div>
+	</div>
+<script src="./script/tb_script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>	
+</body>
+</html>	
