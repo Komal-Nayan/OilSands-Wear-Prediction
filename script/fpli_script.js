@@ -270,7 +270,7 @@ buttonImperial.addEventListener('click', () => {
 		measures[i].innerHTML = 'in';
 	}
 	document.getElementById("impTipSpeedUnits").innerHTML = "ft/s";
-	document.getElementById("eyeTipSpeedUnits").innerHTML = "ft/s";
+	//document.getElementById("eyeTipSpeedUnits").innerHTML = "ft/s";
 	document.getElementById("headUnits").innerHTML = "ft";
 	//document.getElementById("sgUnits").innerHTML="lb/ft<sup>3</sup>";
 	document.getElementById("flowUnits").innerHTML = "gpm";
@@ -289,9 +289,9 @@ buttonImperial.addEventListener('click', () => {
 		if (document.getElementById("avgFlow").value) {
 			document.getElementById("avgFlow").value = (document.getElementById("avgFlow").value * 4.4029).toFixed(2);
 		}
-		if (document.getElementById("eyeTipSpeed").value) {
+		/*if (document.getElementById("eyeTipSpeed").value) {
 			document.getElementById("eyeTipSpeed").value = (document.getElementById("eyeTipSpeed").value * 3.281).toFixed(2);
-		}
+		}*/
 		if (document.getElementById("impTipSpeed").value) {
 			document.getElementById("impTipSpeed").value = (document.getElementById("impTipSpeed").value * 3.281).toFixed(2);
 		}
@@ -308,7 +308,7 @@ buttonMetric.addEventListener('click', () => {
 		measures[i].innerHTML = 'mm';
 	}
 	document.getElementById("impTipSpeedUnits").innerHTML = "m/s";
-	document.getElementById("eyeTipSpeedUnits").innerHTML = "m/s";
+	//document.getElementById("eyeTipSpeedUnits").innerHTML = "m/s";
 	document.getElementById("headUnits").innerHTML = "m";
 	//document.getElementById("sgUnits").innerHTML="lb/ft<sup>3</sup>";
 	document.getElementById("flowUnits").innerHTML = "m<sup>3</sup>/hr";
@@ -327,9 +327,9 @@ buttonMetric.addEventListener('click', () => {
 		if (document.getElementById("avgFlow").value) {
 			document.getElementById("avgFlow").value = (document.getElementById("avgFlow").value / 4.4029).toFixed(2);
 		}
-		if (document.getElementById("eyeTipSpeed").value) {
+		/*if (document.getElementById("eyeTipSpeed").value) {
 			document.getElementById("eyeTipSpeed").value = (document.getElementById("eyeTipSpeed").value / 3.281).toFixed(2);
-		}
+		}*/
 		if (document.getElementById("impTipSpeed").value) {
 			document.getElementById("impTipSpeed").value = (document.getElementById("impTipSpeed").value / 3.281).toFixed(2);
 		}
