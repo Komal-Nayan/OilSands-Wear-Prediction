@@ -375,7 +375,7 @@ function analyse() {
 	var averageRPM = parseFloat(document.getElementById("avgRPM").value);
 	var averageHead = parseFloat(document.getElementById("avgHead").value);
 	var averageD50 = parseFloat(document.getElementById("avgD50").value);
-	var eyeDiameter = parseFloat(document.getElementById("eyeDiameter").value);
+	//var eyeDiameter = parseFloat(document.getElementById("eyeDiameter").value);
 	var fpliID = parseFloat(document.getElementById("fpliID").value);
 	var fpliOD = parseFloat(document.getElementById("fpliOD").value);
 	var impellerOD = parseFloat(document.getElementById("impellerOD").value);
