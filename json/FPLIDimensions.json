@@ -1,0 +1,18 @@
+{
+  "UHTP60041*": {
+    "ID Thickness": 116,
+    "OD Thickness": 116
+  },
+  "UHTP65041*": {
+    "ID Thickness": 90,
+    "OD Thickness": 132
+  },
+  "UHTP50041*": {
+    "ID Thickness": 65,
+    "OD Thickness": 115
+  },
+  "UHTP50041-1*": {
+    "ID Thickness": 55,
+    "OD Thickness": 115
+  }
+}
