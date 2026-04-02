@@ -347,6 +347,8 @@ function validateAnalyse() {
 	if (document.getElementById("SG").value.trim() == "" || !isFloat(document.getElementById("SG").value.trim())) { invalidFields += "S.G." + "\n"; invalidCounter++; }
 	if (document.getElementById("avgFlow").value.trim() == "" || !isFloat(document.getElementById("avgFlow").value.trim())) { invalidFields += "Average Flow" + "\n"; invalidCounter++; }
 	if (document.getElementById("avgD50").value.trim() == "" || !isFloat(document.getElementById("avgD50").value.trim())) { invalidFields += "Average D50" + "\n"; invalidCounter++; }
+	if (document.getElementById("impellerOD").value.trim() == "" || !isFloat(document.getElementById("impellerOD").value.trim())) { invalidFields += "Impeller NOT SELECTED" + "\n"; invalidCounter++; }
+	if (document.getElementById("fpliID").value.trim() == "" || !isFloat(document.getElementById("fpliID").value.trim())) { invalidFields += "FPLI NOT SELECTED" + "\n"; invalidCounter++; }
 
 	if (invalidCounter > 0) {
 		alert("The following fields are blank or invalid :" + "\n" + invalidFields);
@@ -381,7 +383,6 @@ function analyse() {
 	var impellerOD = parseFloat(document.getElementById("impellerOD").value);
 	var exponent1 = parseFloat(document.getElementById('exponent1Value').textContent);
 	var exponent2 = parseFloat(document.getElementById('exponent2Value').textContent);
-
 	//TO BE CHANGED
 	if (buttonImperial.classList.contains('selected')) { // If Imperial
 
