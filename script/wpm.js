@@ -566,7 +566,8 @@ AVERAGE DUTY Conditions - Metric
 		var nominalVaneLength = parseFloat(document.getElementById("nominalVaneLength").value);
 		var impellerID = parseFloat(document.getElementById("impellerID").value);
 		var impellerOD = parseFloat(document.getElementById("impellerOD").value);
-		var exponent = parseFloat(document.getElementById('exponentValue').textContent);
+		//var exponent = parseFloat(document.getElementById('exponentValue').textContent);
+		var exponent = 2.5;
 		var wearCoefficient = parseFloat(document.getElementById("wearCoefficient").value);
 
 		if (buttonImperial.classList.contains('selected')) {
