@@ -307,10 +307,10 @@ AVERAGE DUTY Conditions - Metric
 
 		
 		//Update Exponent 
-        function updateValue(value) {
+        /*function updateValue(value) {
 			//exponent = parseFloat(value).toFixed(2);
             document.getElementById('exponentValue').textContent = parseFloat(value).toFixed(2);
-        }
+        }*/
 
 		//Float/Numeric Check
 		function isFloat(value) {
@@ -472,7 +472,8 @@ AVERAGE DUTY Conditions - Metric
 			var nominalVaneLength = parseFloat(document.getElementById("nominalVaneLength").value);
 			var impellerID = parseFloat(document.getElementById("impellerID").value);
 			var impellerOD = parseFloat(document.getElementById("impellerOD").value);
-			var exponent = parseFloat(document.getElementById('exponentValue').textContent);
+			//var exponent = parseFloat(document.getElementById('exponentValue').textContent);
+			var exponent = 2.5;
 			const goalseekHoursFields = document.querySelectorAll('.goalseekHourInputs');
 			const goalseekVaneLengthFields = document.querySelectorAll('.goalseekVaneLengthInputs');
 			
